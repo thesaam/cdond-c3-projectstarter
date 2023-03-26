@@ -1,0 +1,15 @@
+[URL01]
+https://github.com/thesaam/cdond-c3-projectstarter
+
+[URL02]
+http://udapeople-0affa88.s3-website-us-east-1.amazonaws.com/#/employees
+http://udapeople-fbbd2b0.s3-website-us-east-1.amazonaws.com/#/employees
+
+[URL03]
+http://d1am55ql24zq9m.cloudfront.net
+
+[URL04]
+http://3.87.52.24:3030/api/status
+
+[URL05]
+http://3.92.44.120:9090/targets?search=

@@ -23,17 +23,5 @@
         sudo apt-get update -y
         sudo apt autoremove
 
-    # - name: update and upgrade packages  # sudo apt upgrade
-    #   become: yes
-    #   apt:
-    #     upgrade: yes
-    #     update_cache: yes
-    #     cache_valid_time: 86400
-
-    # - name: remove dependences that are not needed  # sudo apt autoremove
-    #   become: yes
-    #   apt:
-    #     autoremove: yes
-
   roles:
     - configure-prometheus-node-exporter
