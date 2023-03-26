@@ -361,7 +361,7 @@ jobs:
             if curl -s $FRONTEND_WEBSITE | grep "Welcome"
             then
               # This is the intentional error, if "Welcome" is indeed in the response this step will exit with exit code 1
-              exit 1
+              exit 0
             else
               exit 1
             fi
@@ -459,33 +459,24 @@ jobs:
   #           fi
   #           done
 # =====================================================================================
-  # configure-node-exporter:
-  #   docker:
-  #     # - image: amazon/aws-cli   
-  #     - image: cimg/python:3.10         
-  #   steps:
-  #     - checkout
-  #     - install_ansible
-  #     - install_awscli
-  #     - add_ssh_keys:
-  #         fingerprints: ["05:61:a6:c8:27:13:54:4c:5c:20:2f:f1:10:ad:c7:fc"]
-  #     # - run:
-  #     #     name: Install dependencies
-  #     #     command: |
-  #     #       yum update -y
-  #     #       yum install -y  tar gzip
-  #     #       curl -sL https://rpm.nodesource.com/setup_13.x | bash -
-  #     #       yum install -y nodejs
-  #     #       amazon-linux-extras install -y epel
-  #     #       yum install -y ansible
-  #     - attach_workspace:
-  #         at: ~/
-  #     - run:
-  #         name: Configure node_exporter
-  #         command: |
-  #           cd .circleci/ansible
-  #           cat inventory.txt
-  #           ansible-playbook configure-prometheus-node-exporter.yml -i inventory.txt
+  configure-node-exporter:
+    docker:
+      # - image: amazon/aws-cli   
+      - image: cimg/python:3.10         
+    steps:
+      - checkout
+      - install_ansible
+      - install_awscli
+      - add_ssh_keys:
+          fingerprints: ["05:61:a6:c8:27:13:54:4c:5c:20:2f:f1:10:ad:c7:fc"]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Configure node_exporter
+          command: |
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook configure-prometheus-node-exporter.yml -i inventory.txt
 
   # deploy-prometheus-server:
   #   docker:
@@ -564,3 +555,5 @@ workflows:
           requires: [smoke-test]
       - cleanup:
           requires: [cloudfront-update]
+      - configure-node-exporter:
+          requires: [cleanup] 
