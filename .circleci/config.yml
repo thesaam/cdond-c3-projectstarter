@@ -361,9 +361,9 @@ jobs:
             if curl -s $FRONTEND_WEBSITE | grep "Welcome"
             then
               # This is the intentional error, if "Welcome" is indeed in the response this step will exit with exit code 1
-              exit 0
-            else
               exit 1
+            else
+              exit 2
             fi
 # rolls back; should migration fail
       - destroy-environment
